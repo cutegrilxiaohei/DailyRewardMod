@@ -14,9 +14,14 @@ repositories {
     }
 }
 
+loom {
+    // 使用官方 Mojang 映射
+    mappings loom.officialMojangMappings()
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:26.1.2"
-    mappings "net.minecraft:official:26.1.2"
+    // 不需要再写 mappings 行
     modImplementation "net.fabricmc:fabric-loader:0.16.9"
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.101.0+1.21.5"
 }
