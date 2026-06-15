@@ -1,10 +1,15 @@
 plugins {
-    id 'fabric-loom' version '1.16-SNAPSHOT'   // 最新版 Loom
+    id 'fabric-loom' version '1.16-SNAPSHOT'
     id 'java'
 }
 
 group = 'com.yourname'
 version = '1.0.0'
+
+loom {
+    // 使用官方 Mojang 映射
+    mappings = loom.officialMojangMappings()
+}
 
 repositories {
     mavenCentral()
@@ -16,18 +21,8 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:26.1.2"
-    mappings "net.fabricmc:yarn:1.21.2+build.1:v2"   // 使用稳定的 Yarn 映射
-    modImplementation "net.fabricmc:fabric-loader:0.16.9"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.101.0+1.21.5"
-
-    // 强制使用新版 ASM
-    implementation 'org.ow2.asm:asm:9.9.1'
-    implementation 'org.ow2.asm:asm-tree:9.9.1'
-    implementation 'org.ow2.asm:asm-commons:9.9.1'
-}
-
-loom {
-    // 无需额外配置
+    modImplementation "net.fabricmc:fabric-loader:0.19.3"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.151.0+26.1.2"
 }
 
 java {
@@ -36,22 +31,6 @@ java {
     }
 }
 
-processResources {
-    inputs.property "version", project.version
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
 tasks.withType(JavaCompile).configureEach {
     it.options.release = 25
-}
-
-// 确保 Loom 任务使用正确的 ASM
-configurations.all {
-    resolutionStrategy {
-        force 'org.ow2.asm:asm:9.9.1'
-        force 'org.ow2.asm:asm-tree:9.9.1'
-        force 'org.ow2.asm:asm-commons:9.9.1'
-    }
 }
