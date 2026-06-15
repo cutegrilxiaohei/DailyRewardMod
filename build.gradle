@@ -1,8 +1,21 @@
-plugins {
-    // ✅ 使用新的 Loom 插件 ID
-    id 'net.fabricmc.fabric-loom' version '1.16.10'
-    id 'java'
+// 1. 使用传统方式引入插件
+buildscript {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        gradlePluginPortal()
+    }
+    dependencies {
+        // 在这里指定 Loom 插件的具体版本
+        classpath 'net.fabricmc:fabric-loom:1.16.10'
+    }
 }
+
+// 2. 应用插件，这里不需要再写版本号
+apply plugin: 'net.fabricmc.fabric-loom'
+apply plugin: 'java'
 
 group = 'com.yourname'
 version = '1.0.0'
@@ -21,7 +34,6 @@ loom {
 }
 
 dependencies {
-    // ✅ 移除原有的 mappings 行
     minecraft "com.mojang:minecraft:26.1.2"
     modImplementation "net.fabricmc:fabric-loader:0.19.3"
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.151.0+26.1.2"
